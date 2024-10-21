@@ -1,0 +1,57 @@
+[package]
+name = "cross_chain_messaging"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web-based UI framework (Yew)
+yew = "0.19"
+
+# Blockchain libraries (ethers-rs for Ethereum, secp256k1 for key generation)
+ethers = { version = "1.0", features = ["websockets"] }
+secp256k1 = "0.21"
+
+# Cryptography libraries (RSA for encryption)
+rsa = "0.5"
+rand = "0.8"
+
+# IPFS/Arweave interaction (async HTTP requests)
+ipfs-api = "0.10"
+tokio = { version = "1.0", features = ["full"] }
+
+# Additional dependencies for async, futures, etc.
+futures = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# For Ethereum and EVM chains (already present)
+ethers = { version = "1.0", features = ["websockets"] }
+
+# For Substrate-based chains like Polkadot
+substrate-api-client = { git = "https://github.com/scs/substrate-api-client", branch = "master" }
+serde_json = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+
+prometheus = "0.13"
+tokio = { version = "1", features = ["full"] }
+
+use prometheus::{Encoder, TextEncoder, register_counter, Counter};
+
+static RELAY_COUNT: Counter = register_counter!("relay_count", "Total number of relayed messages").unwrap();
+static FAILED_RELAY_COUNT: Counter = register_counter!("failed_relay_count", "Total number of failed relays").unwrap();
+#[tokio::main]
+async fn main() {
+    let counter = RELAY_COUNT.clone();
+    let failed_counter = FAILED_RELAY_COUNT.clone();
+
+    let http_server = warp::path("metrics")
+        .map(move || {
+            let encoder = TextEncoder::new();
+            let mut buffer = vec![];
+            let metric_families = prometheus::gather();
+            encoder.encode(&metric_families, &mut buffer).unwrap();
+            warp::http::Response::builder().body(buffer)
+        });
+
+    warp::serve(http_server).run(([0, 0, 0, 0], 3030)).await;
+}

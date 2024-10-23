@@ -1,11 +1,19 @@
 # Blockchain-Based Messaging Platform in Rust
 
+<<<<<<< HEAD
 
 ## Overview
 
 This project is a **Rust-based blockchain messaging platform** designed for secure, cross-chain communication using blockchain technologies like **Ethereum (EVM)**, **Substrate-based chains (Polkadot)**, and **Hyperledger Fabric**. 
 
 The platform features:
+=======
+#Project Structure
+
+## Overview
+
+This project is a **Rust-based blockchain messaging platform** designed for secure, cross-chain communication using blockchain technologies like **Ethereum (EVM)**, **Substrate-based chains (Polkadot)**, and **Hyperledger Fabric**. The platform features:
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
 
 - **End-to-end encrypted messaging** using wallet-based signatures.
 
@@ -24,7 +32,11 @@ The platform features:
 3. **Decentralized Storage**: Encrypted messages are stored in decentralized storage (IPFS, Arweave).
 
 4. **Yew UI**: A web-based user interface built using **Yew** to interact with the platform.
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
 5. **Multi-Signature Governance**: Multi-sig governance for critical actions (if integrated).
 
 ---
@@ -72,9 +84,15 @@ Ensure you have the following installed:
 1. **Clone the Repository**:
 
     ```bash
+<<<<<<< HEAD
 
     git clone https://github.com/your-repo/blockchain-messaging
 
+=======
+    
+    git clone https://github.com/your-repo/blockchain-messaging
+    
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     cd blockchain-messaging
 
     ```
@@ -82,29 +100,46 @@ Ensure you have the following installed:
 2. **Install Dependencies**:
 
     ```bash
+<<<<<<< HEAD
 
     cargo build
 
+=======
+    
+    cargo build
+    
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     ```
 
 3. **Configure Blockchains**:
 
+<<<<<<< HEAD
     Update the `config/fabric_connection.yaml`, `config/ethereum_config.json`, and `config/substrate_config.json` 
     
     files with your connection details.
 
+=======
+    Update the `config/fabric_connection.yaml`, `config/ethereum_config.json`, and `config/substrate_config.json` files with your connection details.
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
 
 4. **Deploy Hyperledger Fabric Chaincode**:
 
     ```bash
+<<<<<<< HEAD
 
     ./scripts/deploy_chaincode.sh
 
+=======
+    
+    ./scripts/deploy_chaincode.sh
+    
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     ```
 
 5. **Deploy Ethereum Smart Contracts** (if needed):
 
     ```bash
+<<<<<<< HEAD
 
     ./scripts/deploy_ethereum_contract.sh
 
@@ -124,6 +159,27 @@ Ensure you have the following installed:
 
     trunk serve
 
+=======
+    
+    ./scripts/deploy_ethereum_contract.sh
+    
+    ```
+
+5. **Start the Backend**:
+
+    ```bash
+    
+    cargo run
+    
+    ```
+
+6. **Start the Yew UI**:
+
+    ```bash
+    
+    trunk serve
+    
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     ```
 
 ---
@@ -133,15 +189,25 @@ Ensure you have the following installed:
 1. **Compose and Sign Messages**:
 
     - Open the browser at **`localhost:8080`**.
+<<<<<<< HEAD
 
     - Use the **Yew UI** to compose messages.
 
+=======
+   
+    - Use the **Yew UI** to compose messages.
+   
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     - Select a blockchain (Ethereum, Substrate, Fabric) to relay your signed message.
 
 2. **Relaying Messages**:
 
     - The message will be signed using your selected wallet (MetaMask or local).
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     - The signed message is then submitted to the **backend relayer service**, which relays the message across the selected blockchain.
 
 ---
@@ -165,9 +231,15 @@ The project includes unit and integration tests for the relayers, wallet logic, 
 1. **Run All Tests**:
 
     ```bash
+<<<<<<< HEAD
 
     ./scripts/run_tests.sh
 
+=======
+    
+    ./scripts/run_tests.sh
+    
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
     ```
 
 2. **Test Results**:
@@ -178,9 +250,15 @@ The project includes unit and integration tests for the relayers, wallet logic, 
 
 TO DO:
 
+<<<<<<< HEAD
 Testing and Validation: Ensure that all the relayers and the UI work as expected across the blockchains (Ethereum, Substrate, and Fabric).
 
 Documentation Review: Finalize the documentation for SDKs, APIs, and deployment instructions for different environments.
+=======
+1. Testing and Validation: Ensure that all the relayers and the UI work as expected across the blockchains (Ethereum, Substrate, and Fabric).
+
+2. Documentation Review: Finalize the documentation for SDKs, APIs, and deployment instructions for different environments.
+>>>>>>> 8e217bdb26d0f39fd4abfb19e9667e0f7cd2669b
 
 ## License
 

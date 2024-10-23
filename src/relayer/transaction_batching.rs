@@ -55,3 +55,27 @@ pub async fn batch_relay_to_evm(
     println!("Successfully relayed {} messages in batch to EVM", messages.len());
     Ok(())
 }
+
+// Optimized batch relaying for EVM-based chains
+pub async fn optimized_batch_relay_to_evm(
+    provider: Provider<Http>,
+    signer: LocalWallet,
+    messages: Vec<(String, Address)>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut batch_data = vec![];
+
+    for (ipfs_hash, recipient) in messages {
+        // Create the transaction data
+        let tx_data = format!("{}:{}", ipfs_hash, recipient);
+        batch_data.push(tx_data);
+    }
+
+    // Send the batch transaction with all the message data
+    let tx = TransactionRequest::new().to(signer.address()).data(batch_data.concat().into_bytes());
+
+    let pending_tx = provider.send_transaction(tx, None).await?;
+    let receipt = pending_tx.await?;
+    println!("Batch of {} messages relayed with TX hash: {:?}", batch_data.len(), receipt.transaction_hash);
+
+    Ok(())
+}

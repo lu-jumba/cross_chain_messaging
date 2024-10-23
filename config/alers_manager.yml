@@ -1,0 +1,11 @@
+groups:
+- name: relayer_alerts
+  rules:
+  - alert: HighErrorRate
+    expr: job:relayer_errors:rate1m > 10
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High error rate detected in relayer"
+      description: "The relayer is experiencing an error rate of >10 errors per minute."

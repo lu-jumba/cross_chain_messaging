@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relayer-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: relayer
+  template:
+    metadata:
+      labels:
+        app: relayer
+    spec:
+      containers:
+      - name: relayer
+        image: relayer-image:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: FABRIC_CONFIG_PATH
+          value: "/etc/fabric/config"
+        - name: ETHEREUM_NODE_URL
+          value: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID"

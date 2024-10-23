@@ -1,0 +1,5 @@
+scrape_configs:
+  - job_name: 'relayer-metrics'
+    static_configs:
+      - targets: ['localhost:9091'] # The endpoint where relayers expose metrics
+

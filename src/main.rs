@@ -7,6 +7,59 @@ mod ui;
 use rsa::{RsaPublicKey, RsaPrivateKey};
 use yew::prelude::*;
 use wasm_bindgen_futures::spawn_local;
+use prometheus::{Encoder, TextEncoder, register_counter, Counter};
+use prometheus::{register_gauge, register_counter, Gauge, Counter};
+
+// Define metrics
+static RELAYER_UPTIME: Gauge = register_gauge!("relayer_uptime", "Relayer uptime in hours").unwrap();
+static MESSAGE_RELAY_COUNT: Counter = register_counter!("message_relay_count", "Number of messages relayed").unwrap();
+static ERROR_COUNT: Counter = register_counter!("error_count", "Number of relay errors").unwrap();
+
+
+
+static RELAY_COUNT: Counter = register_counter!("relay_count", "Total number of relayed messages").unwrap();
+static FAILED_RELAY_COUNT: Counter = register_counter!("failed_relay_count", "Total number of failed relays").unwrap();
+
+static RELAYED_MESSAGES: Counter = register_counter!("relayed_messages", "Number of cross-chain messages relayed").unwrap();
+
+
+#[tokio::main]
+async fn main() {
+    let counter = RELAY_COUNT.clone();
+    let failed_counter = FAILED_RELAY_COUNT.clone();
+
+    let http_server = warp::path("metrics")
+        .map(move || {
+            let encoder = TextEncoder::new();
+            let mut buffer = vec![];
+            let metric_families = prometheus::gather();
+            encoder.encode(&metric_families, &mut buffer).unwrap();
+            warp::http::Response::builder().body(buffer)
+        });
+
+    warp::serve(http_server).run(([0, 0, 0, 0], 3030)).await;
+
+    // Update metrics in your relayer logic
+fn update_metrics() {
+    RELAYER_UPTIME.set(get_relayer_uptime());
+    MESSAGE_RELAY_COUNT.inc();
+    if relay_failed() {
+        ERROR_COUNT.inc();
+    }
+}
+
+fn expose_metrics() {
+    RELAYER_UPTIME.set(get_relayer_uptime());
+    MESSAGE_RELAY_COUNT.inc();
+    if relay_failed() {
+        ERROR_COUNT.inc();
+    }
+}
+
+func updateRelayedMessageMetric() {
+    RELAYED_MESSAGES.inc()
+}
+}
 
 #[function_component(App)]
 fn app() -> Html {
@@ -77,3 +130,4 @@ fn main() {
     yew::start_app::<App>();
 }
 
+//Implement Logging and Enhanced Error Handling
